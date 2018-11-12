@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/flask_sqlarclemyDemo.iml" filepath="$PROJECT_DIR$/.idea/flask_sqlarclemyDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/flask_sqlalchemyDemo.iml" filepath="$PROJECT_DIR$/.idea/flask_sqlalchemyDemo.iml" />
     </modules>
   </component>
 </project>
