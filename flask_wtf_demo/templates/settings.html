@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>设置中心</title>
+    <style>
+        .username-input{
+            background: red;
+        }
+    </style>
+</head>
+<body>
+<form action="" method="POST">
+    <table>
+        <tbody>
+        <tr>
+            <td>{{ form.username.label }}</td>
+            <td>{{ form.username(class='username-input') }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.age.label }}</td>
+            <td>{{ form.age() }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.rememberMe.label }}</td>
+            <td>{{ form.rememberMe() }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.tags.label }}</td>
+            <td>{{ form.tags() }}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="提交"></td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+</body>
+</html>
