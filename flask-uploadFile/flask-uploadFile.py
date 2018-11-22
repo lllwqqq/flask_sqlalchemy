@@ -1,4 +1,4 @@
-from flask import Flask,request,render_template
+from flask import Flask,request,render_template,send_from_directory
 import os
 app = Flask(__name__)
 
@@ -18,6 +18,11 @@ def uploadFile():
         avatar = request.files.get('avatar')
         avatar.save(os.path.join(UPLOAD_PATH,avatar.filename))
         return '文件上传成功!!!'
+
+
+@app.route('/files/<filename>/')
+def get_file(filename):
+    return send_from_directory(UPLOAD_PATH,filename)
 
 
 if __name__ == '__main__':
