@@ -1,3 +1,3 @@
-# flask_sqlalchemy
+# flask
 
-# 这是flask sqlalchemy 练习项目
+# 这是flask练习项目
