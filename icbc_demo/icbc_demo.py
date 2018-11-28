@@ -4,11 +4,15 @@ from exts import db
 import config
 from models import User
 from auth import login_requered
+from flask_wtf import CSRFProtect
 
 
 app = Flask(__name__)
 app.config.from_object(config)
 db.init_app(app)
+
+# 防御CSRF攻击
+CSRFProtect(app)
 
 @app.route('/')
 def index():

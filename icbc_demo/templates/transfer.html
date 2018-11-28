@@ -6,6 +6,8 @@
 </head>
 <body>
 <form action="" method="post">
+    {#    防御CSRF攻击#}
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <table>
         <tbody>
             <tr>
