@@ -1,0 +1,64 @@
+Flask+Flask-SQLALchemy+Flask-Script 操作数据库
+
+1. 新建exts.py文件，用于初始化db对象,示例代码：
+# coding=utf-8
+from flask_sqlalchemy import SQLAlchemy
+db = SQLAlchemy()
+
+2. 新建config.py文件，用于配置数据库连接等信息
+
+config.py文件示例代码：
+# coding=utf-8
+HOSTNAME = '127.0.0.1'
+PORT     = '3306'
+DATABASE = 'flask_icbc_demo'
+USERNAME = 'root'
+PASSWORD = 'coursedev'
+DB_URI = 'mysql+pymysql://{}:{}@{}:{}/{}?charset=utf8'.format(USERNAME,PASSWORD,HOSTNAME,PORT,DATABASE)
+SQLALCHEMY_DATABASE_URI = DB_URI
+
+SQLALCHEMY_TRACK_MODIFICATIONS = False
+配置好config.py文件后，需要将app和config关联起来，则需要在app主文件中将app初始化进db，示例代码如下：
+from exts import db
+import config
+
+app = Flask(__name__)
+db.init_app(app)
+app.config.from_object(config)
+
+3. db初始化且与app关联后，需要新建models文件，用于存放数据库表模型，为了让模型与数据库关联，则需导入db
+from exts import db
+class User(db.Model):
+    __tablename__ = 'user'
+    id = db.Column(db.Integer,primary_key=True,autoincrement=True)
+    username = db.Column(db.String(50),nullable=False)
+    email = db.Column(db.String(50),nullable=False)
+    password = db.Column(db.String(50),nullable=False)
+    deposit = db.Column(db.Float,nullable=False,default=0)
+
+4. 数据库模型创建好后，则需要用flask-migrate和flask-script将模型映射到表中，manage.py 示例代码如下
+# coding=utf-8
+from flask_migrate import Migrate,MigrateCommand
+from flask_script import Manager
+from icbc_demo import app
+from exts import db
+# 如果不导入，则会在migrate的时候，找不到模型，就不会生成相应的表
+from models import User
+
+
+manage = Manager(app)
+
+Migrate(app,db)
+
+manage.add_command('db',MigrateCommand)
+
+
+if __name__ == '__main__':
+    manage.run()
+
+5. 最后就可以在命令行用migrate命令来实现表的CRUD操作
+	python manage.py db init ---初始化迁移文件
+	python manage.py db migrate ---生成迁移文件
+	python manage.py db upgrade	---执行迁移文件
+
+
