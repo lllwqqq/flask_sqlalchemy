@@ -1,5 +1,5 @@
 from flask import Flask,request,g
-from singals import loginsingal
+from singals import loginsignal
 app = Flask(__name__)
 
 
@@ -22,7 +22,7 @@ def login():
     if username:
         # 第二种方法是用g对象
         g.username = username
-        loginsingal.send()
+        loginsignal.send()
         return '登陆成功！'
     else:
         return "请输入用户名"

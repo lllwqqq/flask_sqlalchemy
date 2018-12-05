@@ -1,14 +1,14 @@
 # coding=utf-8
 from blinker import Namespace
 from datetime import datetime
-from flask import request,g
+from flask import request,g,template_rendered
 
 # 初始化一个命名空间对象,为了防止多人同时开发时，信号名字重复的问题
 loginspace = Namespace()
 
 # 创建一个信号
 
-loginsingal = loginspace.signal('login')
+loginsignal = loginspace.signal('login')
 
 
 # 两种方法接收信号信息
@@ -30,4 +30,4 @@ def login_log(sender):
         fp.write(log_line+'\n')
 
 # 监听信号
-loginsingal.connect(login_log)
+loginsignal.connect(login_log)
