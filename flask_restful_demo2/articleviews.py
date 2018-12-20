@@ -8,6 +8,8 @@ from flask_restful import Resource, Api, reqparse, marshal_with, fields
 article_bp = Blueprint('article',__name__,url_prefix='/article')
 api = Api(article_bp)
 
+
+# 解决在蓝图中reder_template返回html代码的问题
 @api.representation('text/html')
 def output_html(data,code,headers):
     # 在representation装饰的函数中，必须返回一个Response对象
@@ -37,10 +39,10 @@ class ArticleView(Resource):
         return article
 
 
-api.add_resource(ArticleView,'/<article_id>/',endpoint='article')
 
 class ListView(Resource):
     def get(self):
         return render_template('article_list.html')
 
+api.add_resource(ArticleView,'/<article_id>/',endpoint='article')
 api.add_resource(ListView,'/list/',endpoint='article_list')
