@@ -1,5 +1,5 @@
 # coding=utf-8
-from flask import Blueprint,views,render_template,request,session,redirect,url_for
+from flask import Blueprint,views,render_template,request,session,redirect,url_for,g
 from .forms import LoginForm
 from .models import CMSUser
 from .decorators import login_required
@@ -10,7 +10,19 @@ bp = Blueprint("cms",__name__,url_prefix="/cms")
 @bp.route('/')
 @login_required
 def index():
-    return "cms index"
+    return render_template('cms/cms_base.html')
+
+
+@bp.route('logout')
+@login_required
+def logout():
+    del session[config.CMS_USER_ID]
+    return redirect(url_for('cms.login'))
+
+@bp.route('setting')
+@login_required
+def setting():
+    return render_template('cms/cms_user_profile.html')
 
 class LiginView(views.MethodView):
     def get(self,message=None):
@@ -36,5 +48,13 @@ class LiginView(views.MethodView):
             print(form.errors)
             message = form.errors.popitem()[1][0]
             return self.get(message=message)
+
+@bp.before_request
+def before_request():
+    if config.CMS_USER_ID in session:
+        user_id = session.get(config.CMS_USER_ID)
+        user = CMSUser.query.get(user_id)
+        if user:
+            g.cms_user = user
 
 bp.add_url_rule('/login/',view_func=LiginView.as_view('login'))

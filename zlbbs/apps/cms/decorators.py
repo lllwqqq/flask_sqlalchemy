@@ -12,3 +12,7 @@ def login_required(func):
         else:
             return redirect(url_for('cms.login'))
     return inner
+
+# @login_required
+# def index():
+#     return 'cms index111'
