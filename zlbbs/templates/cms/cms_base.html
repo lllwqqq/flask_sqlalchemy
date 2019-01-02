@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{% block title %}
     {% endblock %}</title>
     <script src="http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
@@ -10,6 +11,13 @@
     <link rel="stylesheet" href="{{ url_for('static',filename='cms/css/cms_base.css') }}">
     <script src="{{ url_for('static',filename='cms/js/cms_base.js') }}"></script>
     <link rel="icon" href="https://xbimg.xiaobaishixi.com/static/img/favicon.ico" type="image/x-icon"/>
+    <script src="{{ url_for('static', filename='common/js/bbsajax.js') }}"></script>
+    <link href="{{ url_for('static', filename='common/sweetalert/sweetalert.css')}}" rel="stylesheet">
+    <script src="{{ url_for('static', filename='common/sweetalert/sweetalert.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='common/sweetalert/xtalert.js') }}"></script>
+    {% block head %}
+
+    {% endblock %}
 </head>
 <body>
      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -44,8 +52,8 @@
                     <a href="#">个人中心<span></span></a>
                     <ul class="subnav">
                         <li><a href="{{ url_for('cms.profile') }}">个人信息</a></li>
-                        <li><a href="#">修改密码</a></li>
-                        <li><a href="#">修改邮箱</a></li>
+                        <li><a href="{{ url_for('cms.resetpwd') }}">修改密码</a></li>
+                        <li><a href="{{ url_for('cms.resetemail') }}">修改邮箱</a></li>
                     </ul>
                 </li>
 
