@@ -1,31 +1,42 @@
 {% extends 'cms/cms_base.html' %}
+
 {% block title %}
-    CMS系统-个人信息
+    个人信息
 {% endblock %}
+
+{% block page_title %}
+    {{ self.title() }}
+{% endblock %}
+
 {% block main_content %}
+    {% set user = g.cms_user %}
     <table class="table table-bordered">
-        {% set user = g.cms_user %}
         <tbody>
-        <tr>
-            <td>用户名:</td>
-            <td>{{ user.username }}</td>
-        </tr>
-        <tr>
-            <td>邮箱:</td>
-            <td>{{ user.email }}</td>
-        </tr>
-        <tr>
-            <td>权限:</td>
-            <td>暂未实现</td>
-        </tr>
-        <tr>
-            <td>角色:</td>
-            <td>暂未实现</td>
-        </tr>
-        <tr>
-            <td>创建时间:</td>
-            <td>{{ user.join_time }}</td>
-        </tr>
+            <tr>
+                <td>用户名：</td>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <td>邮箱：</td>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <td>角色：</td>
+                <td>
+                    暂未实现
+                </td>
+            </tr>
+            <tr>
+                <td>权限：</td>
+                <td>
+                    暂未实现
+
+                </td>
+            </tr>
+            <tr>
+                <td>加入时间：</td>
+                <td>{{ user.join_time }}</td>
+            </tr>
         </tbody>
     </table>
 {% endblock %}

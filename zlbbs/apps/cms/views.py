@@ -32,36 +32,6 @@ def profile():
     return render_template('cms/cms_profile.html')
 
 
-@bp.route('/myhome/')
-@login_required
-def myhome():
-    return render_template('cms/cms_my_hone.html')
-
-@bp.route('/card/')
-@login_required
-def card():
-    return render_template('cms/cms_card.html')
-
-@bp.route('/users/')
-@login_required
-def cms_users():
-    return render_template('cms/cms_users.html')
-
-@bp.route('/ausers/')
-@login_required
-def cms_ausers():
-    return render_template('cms/cms_ausers.html')
-
-@bp.route('/groups/')
-@login_required
-def cms_groups():
-    return render_template('cms/cms_groups.html')
-
-@bp.route('/agroups/')
-@login_required
-def cms_agroups():
-    return render_template('cms/cms_agroups.html')
-
 class LiginView(views.MethodView):
     def get(self,message=None):
         return render_template('cms/cms_login.html',message=message)
