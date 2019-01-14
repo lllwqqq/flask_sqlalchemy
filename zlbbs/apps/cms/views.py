@@ -1,11 +1,11 @@
 # coding=utf-8
 from flask import Blueprint,views,render_template,request,session,redirect,url_for,g,jsonify
-from .forms import LoginForm, ResetPwdForm, RestEmailForm
+from .forms import LoginForm, ResetPwdForm, ResetEmailForm
 from .models import CMSUser
 from .decorators import login_required
 import config,string,random
 from exts import db,mail
-from utils import xjson,xcache
+from utils import xjson,xcache,restful
 from flask_mail import Message
 
 bp = Blueprint("cms",__name__,url_prefix="/cms")
@@ -86,24 +86,22 @@ class ResetEmailView(views.MethodView):
     decorators = [login_required]
     def get(self):
         return render_template('cms/cms_resetemail.html')
-
     def post(self):
-        resetemail_form = RestEmailForm(request.form)
-        if resetemail_form.validate():
-            email = resetemail_form.email.data
+        form = ResetEmailForm(request.form)
+        if form.validate():
+            email = form.email.data
             g.cms_user.email = email
             db.session.commit()
-            return xjson.json_success('邮箱修改成功')
+            return restful.success()
         else:
-            message = resetemail_form.errors()
-            return xjson.json_paramserror(message)
+            return restful.params_error(form.get_error())
 
 @bp.route('/email_captcha/')
 @login_required
 def email_captcha():
     email = request.args.get('email')
     if not email:
-        return xjson.json_paramserror('请传递邮件参数')
+        return xjson.json_paramserror('请传递邮箱地址')
 
     #生成6位数的随机验证码
     source = list(string.ascii_letters)
@@ -111,7 +109,7 @@ def email_captcha():
     captcha = ''.join(random.sample(source,6))
 
     #发送验证码邮件
-    msg = Message('BBS论坛更换邮箱验证码',
+    msg = Message('Aroma的BBS论坛更换邮箱验证码',
                   recipients=[email],
                   body='您的验证码是：{}，5分钟内有效'.format(captcha)
                   )

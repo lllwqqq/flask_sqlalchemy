@@ -1,6 +1,6 @@
 
 $(function () {
-    $("#captcha-btn").click(function (event) {
+    $("#get_captcha-btn").click(function (event) {
         event.preventDefault();
         var email = $("input[name='email']").val();
         if(!email){

@@ -3,20 +3,21 @@ from wtforms import Form,StringField,IntegerField
 from wtforms.validators import Email,InputRequired,Length,EqualTo,ValidationError
 from .models import CMSUser
 from utils import xcache
+from ..forms import BaseForm
 
-class LoginForm(Form):
+class LoginForm(BaseForm):
     email = StringField(validators=[Email(message='请输入正确的邮箱!'),InputRequired(message='请输入邮箱!')])
     password = StringField(validators=[Length(6,20,message='请输入正确的密码!')])
     remember = IntegerField()
 
 
-class ResetPwdForm(Form):
+class ResetPwdForm(BaseForm):
     oldpwd = StringField(validators=[Length(6,30, message='密码长度6-30')])
     newpwd = StringField(validators=[Length(6,30, message='密码长度6-30')])
     newpwd2 = StringField(validators=[EqualTo('newpwd', message='新密码输入不一致')])
 
 
-class RestEmailForm(Form):
+class ResetEmailForm(BaseForm):
     email = StringField(validators=[Email(message='邮箱格式错误'),InputRequired(message='请输入邮箱') ])
     captcha = StringField(validators=[Length(min=6, max=6, message='验证码长度错误')])
 
